@@ -1,0 +1,25 @@
+{
+  "name": "salome",
+  "version": "0.0.1",
+  "description": "Authentication service for Tesselo",
+  "main": "index.js",
+  "dependencies": {
+    "serverless": "^2.66.2",
+    "serverless-lambda-edge-pre-existing-cloudfront": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tesselo/salome.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tesselo/salome/issues"
+  },
+  "homepage": "https://github.com/tesselo/salome#readme"
+}
