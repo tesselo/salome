@@ -1,10 +1,12 @@
-// test-auth.js
+// Shamelessly extracted from:
+// https://dev.to/tastefulelk/basic-authentication-with-lambda-edge-23o5
+
 const handler = async (event) => {
   const { request } = event.Records[0].cf;
   const headers = request.headers;
 
   const username = 'theuser';
-  const password = 'thepassword';
+  const password = 'dKzc3Whs7K';
 
   const base64Credentials = Buffer.from(`${username}:${password}`).toString('base64');
   const authString = `Basic ${base64Credentials}`;
