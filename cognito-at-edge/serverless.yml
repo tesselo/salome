@@ -16,8 +16,8 @@ provider:
   lambdaHashingVersion: 20201221
 
 functions:
-  test-auth:
-    handler: test-auth.handler
+  cognito-auth:
+    handler: cognito-auth.handler
     events:
       - preExistingCloudFront:
           distributionId: ${env:CLOUDFRONT_DISTRIBUTION_ID}
@@ -41,6 +41,5 @@ resources:
                   - edgelambda.amazonaws.com
               Action: sts:AssumeRole
         ManagedPolicyArns:
-          - arn:aws:iam::595064993071:policy/zappa-permissions
           - arn:aws:iam::aws:policy/service-role/AWSLambdaRole
 

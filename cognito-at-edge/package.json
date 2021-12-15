@@ -1,13 +1,15 @@
 {
   "name": "salome",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Authentication service for Tesselo",
   "main": "index.js",
   "dependencies": {
+    "cognito-at-edge": "^1.1.0"
+  },
+  "devDependencies": {
     "serverless": "^2.66.2",
     "serverless-lambda-edge-pre-existing-cloudfront": "^1.2.0"
   },
-  "devDependencies": {},
   "scripts": {
     "test": ""
   },
