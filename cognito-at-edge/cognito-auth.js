@@ -21,7 +21,7 @@ const robotAuthenticator = new RobotAuthenticator({
   userPoolId: userPoolId,
   userPoolAppId: userPoolRobotAppId,
   userPoolDomain: userPoolDomain,
-  logLevel: 'debug'
+  logLevel: logLevel
 });
 
 module.exports.handler = async(event) => {
@@ -29,9 +29,9 @@ module.exports.handler = async(event) => {
   const uri = request.uri;
   if (uri.match(/^\/?api/)) {
     event.Records[0].cf.request.uri = uri.replace(/^\/?api/,'');
-    robotAuthenticator.handle(event);
+    return robotAuthenticator.handle(event);
   } else {
-    humanAuthenticator.handle(event);
+    return humanAuthenticator.handle(event);
   }
 }
 

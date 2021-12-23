@@ -7,15 +7,11 @@ const pino = require('pino');
 class RobotAuthenticator {
   constructor(params) {
     this._verifyParams(params);
-    this._region = params.region;
-    this._userPoolId = params.userPoolId;
     this._userPoolAppId = params.userPoolAppId;
-    this._userPoolAppSecret = params.userPoolAppSecret;
-    this._userPoolDomain = params.userPoolDomain;
     this._issuer = `https://cognito-idp.${params.region}.amazonaws.com/${params.userPoolId}`;
     this._logger = pino({
       level: params.logLevel || 'silent', // Default to silent
-      base: null, //Remove pid, hostname and name logging as not usefull for Lambda
+      base: null, //Remove pid, hostname and name logging as not useful for Lambda
     });
   }
 
@@ -63,7 +59,7 @@ class RobotAuthenticator {
     this._logger.debug({ msg: 'Verifying token...', token });
     const decoded = jwt.decode(token, {complete: true});
     const kid = decoded.header.kid;
-    const verified = jwt.verify(token, jwkToPem(this._jwks[kid]), { audience: this._userPoolAppId, issuer: this._issuer });
+    const verified = jwt.verify(token, jwkToPem(this._jwks[kid]), { sub: this._userPoolAppId, iss: this._issuer });
     assert.strictEqual(verified.token_use, 'access');
     return verified;
   }
@@ -84,17 +80,16 @@ class RobotAuthenticator {
     }
 
     const { request } = event.Records[0].cf;
-    const cfDomain = request.headers.host[0].value;
 
     try {
-      const authHeader = request.headers.authentication[0];
-      if (authHeader.split(" ")[0] !== "Bearer") {
-        throw 'Authentication does not follow the Bearer schema';
+      const authHeader = request.headers.authorization[0].value;
+      if (authHeader.split(" ")[0] !== 'Bearer') {
+        throw 'Authorization does not follow the Bearer schema';
       }
 
       const token = authHeader.split(" ")[1];
       const user = this._getVerifiedToken(token);
-      this._logger.info({ msg: 'Forwading request', path: request.uri, user });
+      this._logger.info({ msg: 'Forwarding request', path: request.uri, user });
       return request;
     } catch (err) {
         return {
