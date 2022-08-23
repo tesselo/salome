@@ -8,7 +8,7 @@ provider:
   # Cloudfront only supports Lambda@Edge functions defined 
   # in us-east-1
   region: 'us-east-1'
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   versionFunctions: true
   memorySize: 128
   role: role
